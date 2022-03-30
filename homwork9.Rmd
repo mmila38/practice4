@@ -1,0 +1,39 @@
+---
+title: "homework9"
+author: "Michael Mila"
+date: "3/30/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
+av
+```
+
+```{r}
+
+#parsing time and deaths[1-5] into one column
+av1 <- gather(av, time, deaths, c(11, 13, 15, 17, 19))
+
+# replacing death[number] with number and empty characters with NA
+av1 = av1 %>% mutate(time = parse_number(time))
+av1 = av1 %>% mutate(Deaths = replace(deaths, deaths == "", NA)) %>%
+select(-deaths)
+
+av2 = av1 %>% select(Name.Alias, time, Deaths)
+av3 = av %>% gather(key = time, value = Return, c(12, 14, 16, 18, 20))
+av3 = av3 %>% mutate(time = parse_number(time))
+av4 = av3 %>% select(Name.Alias, time, Return)
+
+av.neat = left_join(av2, av4, by = c("Name.Alias", "time"))
+```
+
+View(av.neat)
