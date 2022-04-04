@@ -21,7 +21,9 @@ av
 ```{r}
 
 #parsing time and deaths[1-5] into one column
-av1 <- gather(av, time, deaths, c(11, 13, 15, 17, 19))
+av0 = av %>% filter(Name.Alias != "")
+av0 = av0 %>% filter(Name.Alias != "Vance Astrovik")
+av1 = av0 %>% gather(time, deaths, c(11, 13, 15, 17, 19))
 
 # replacing death[number] with number and empty characters with NA
 av1 = av1 %>% mutate(time = parse_number(time))
@@ -34,6 +36,7 @@ av3 = av3 %>% mutate(time = parse_number(time))
 av4 = av3 %>% select(Name.Alias, time, Return)
 
 av.neat = left_join(av2, av4, by = c("Name.Alias", "time"))
+av.neat$Return = replace(av.neat$Return, av.neat$Return == "", NA)
 ```
 
 View(av.neat)
