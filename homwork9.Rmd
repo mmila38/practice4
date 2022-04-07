@@ -39,4 +39,22 @@ av.neat = left_join(av2, av4, by = c("Name.Alias", "time"))
 av.neat$Return = replace(av.neat$Return, av.neat$Return == "", NA)
 ```
 
-View(av.neat)
+## Michael's Question: But you can only tempt death so many times. There’s a 2-in-3 chance that a member of the Avengers returned from their first stint in the afterlife, but only a 50 percent chance they recovered from a second or third death.
+
+```{r}
+## characters who have died once
+av.test = av.neat %>% filter(Deaths == "YES", time == 1)
+av.test1 = av.test %>% mutate(firstDeathReturn = (Return == "YES"))
+mean(av.test1$firstDeathReturn)
+```
+
+### The return percentage after the first death is about 0.70 or 70%. So the article is kind of correct in saying that there is a 2-in-3 chance that a member returns after the first death.
+
+```{r}
+av.test = av.neat %>% filter(Deaths == "YES", time %in% c(2, 3))
+av.test1 = av.test %>% mutate(firstDeathReturn = (Return == "YES"))
+mean(av.test1$firstDeathReturn)
+```
+
+### The return percentage after the second or third is about 0.53 or 53%. Again, the article is somewhat correct in saying that there is a 50% recover after their second or third death.
+
