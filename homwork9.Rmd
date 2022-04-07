@@ -5,6 +5,12 @@ date: "3/30/2022"
 output: html_document
 ---
 
+# Team Members:
+- Michael Mila
+- Wei Hern Lim
+
+Github: https://github.com/mmila38/practice4
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -15,7 +21,6 @@ library(tidyverse)
 
 ```{r}
 av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
-av
 ```
 
 ```{r}
@@ -51,6 +56,7 @@ mean(av.test1$firstDeathReturn)
 ### The return percentage after the first death is about 0.70 or 70%. So the article is kind of correct in saying that there is a 2-in-3 chance that a member returns after the first death.
 
 ```{r}
+# characters who have died 2 or 3 times
 av.test = av.neat %>% filter(Deaths == "YES", time %in% c(2, 3))
 av.test1 = av.test %>% mutate(firstDeathReturn = (Return == "YES"))
 mean(av.test1$firstDeathReturn)
